@@ -1,5 +1,4 @@
 public class Cryptographer {
-    private final String alphabet = "абвгдеёжзийклмнопрстуфхцчшщьъэюя.,”:-!? ";
 
     public String encrypt(String text, int key){
         return getString(text, key, true);
@@ -10,6 +9,7 @@ public class Cryptographer {
     }
 
     private String getString(String text, int key, boolean doEncrypt) {
+        String alphabet = Cryptanalysis.alphabet;
         if(text==null||key==0) {
             System.out.println("Введены некорректные данные!");
             return "";
@@ -25,10 +25,12 @@ public class Cryptographer {
                 index = alphabet.toUpperCase().indexOf(symbolAtI);
             else
                 index = alphabet.indexOf(symbolAtI);
-            if (index < 0)
+            if (index < 0) {
                 continue;
+            }
+
             index += doEncrypt?key:-key;
-            int multiply = Math.abs(key/alphabet.length())+1;
+            int multiply = Math.abs(key/ alphabet.length())+1;
             if(index > maxIndexValue)
                 index = index - (alphabet.length()) * multiply;
             else if(index<0)
@@ -39,8 +41,10 @@ public class Cryptographer {
             if (index < 0)
                 index += maxIndexValue;
 
-            result[i] = isLowercase?alphabet.charAt(index):Character.toUpperCase(alphabet.charAt(index));
+            result[i] = isLowercase? alphabet.charAt(index):Character.toUpperCase(alphabet.charAt(index));
         }
         return new String(result);
     }
+
 }
+
